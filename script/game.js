@@ -7,8 +7,10 @@ let cards = [
     'tripletsparrot',
     'unicornparrot',
 ];
-
 let selectedCards = [];
+let firstCard = '';
+let secondCard = '';
+
 const cardField = document.querySelector('.cardField');
 let cardQuantity = Number(prompt("Digite o número de cartas do jogo:"));
 
@@ -42,20 +44,52 @@ function createCard(parrotImage){
 
     const card = createCardElement('figure', 'classFigure');
     const faceFront = createCardElement('ul', 'face front');
-    const faceFrontFigure = createCardElement('div', 'frontBoxFigure');
     const faceBack = createCardElement('ul', 'face back')
-    const faceBackFigure = createCardElement('div', 'backBoxFigure');
     
-    faceFrontFigure.style.backgroundImage = `url('./bib/${parrotImage}.gif')`
+    faceFront.style.backgroundImage = `url('./bib/${parrotImage}.gif')`
 
     card.appendChild(faceFront);
-    faceFront.appendChild(faceFrontFigure);
     card.appendChild(faceBack);
-    faceBack.appendChild(faceBackFigure);
     cardField.appendChild(card);
+
+    card.addEventListener('click', flipCard);
+    card.setAttribute('data-parrotGif', parrotImage)
 
     return card;
 }
+
+function isEqual(){
+    const firstParrot = firstCard.getAttribute('data-parrotGif');
+    const secondParrot = secondCard.getAttribute('data-parrotGif');
+
+    if(firstParrot == secondParrot){
+        firstCard = '';
+        secondCard = '';
+    }else{
+        setTimeout(() => {
+            firstCard.classList.remove('flipCard');
+            secondCard.classList.remove('flipCard');
+
+            firstCard = '';
+            secondCard = '';
+        }, 1000);
+    }
+}
+
+function flipCard({target}){
+    if(target.parentNode.className.includes('flipCard')){
+        return;
+    }
+    if(firstCard == ''){
+        target.parentNode.classList.add('flipCard');
+        firstCard = target.parentNode;
+    }else if(secondCard == ''){
+        target.parentNode.classList.add('flipCard');
+        secondCard = target.parentNode;
+    }
+    isEqual();
+}
+
 
 function loadGame(){
     selectedCards.sort(shuffle);
