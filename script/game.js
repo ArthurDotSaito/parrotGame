@@ -10,6 +10,7 @@ let cards = [
 let selectedCards = [];
 let firstCard = '';
 let secondCard = '';
+let NumberOfMoves = 0;
 
 const cardField = document.querySelector('.cardField');
 let cardQuantity = Number(prompt("Digite o número de cartas do jogo:"));
@@ -58,13 +59,27 @@ function createCard(parrotImage){
     return card;
 }
 
+function endGame(){
+    let flippedCards = document.querySelectorAll('.flipCard');
+    console.log(flippedCards);
+    console.log(cardQuantity);
+    if(flippedCards.length == cardQuantity){
+        alert("Você ganhou com X jogadas!");
+    }
+}
+
 function isEqual(){
-    const firstParrot = firstCard.getAttribute('data-parrotGif');
-    const secondParrot = secondCard.getAttribute('data-parrotGif');
+    let firstParrot = firstCard.getAttribute('data-parrotGif');
+    let secondParrot = secondCard.getAttribute('data-parrotGif');
+
+    console.log(firstParrot);
+    console.log(secondParrot);
 
     if(firstParrot == secondParrot){
         firstCard = '';
         secondCard = '';
+
+        setTimeout(endGame, 1200);
     }else{
         setTimeout(() => {
             firstCard.classList.remove('flipCard');
@@ -72,6 +87,7 @@ function isEqual(){
 
             firstCard = '';
             secondCard = '';
+
         }, 1000);
     }
 }
