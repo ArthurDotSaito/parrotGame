@@ -22,6 +22,15 @@ header{
     margin-top: 40px;
 }
 
+header aside{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 20px;
+}
+
 header h4{
     display: flex;
     justify-content: center;
@@ -112,7 +121,7 @@ main{
     }
 
     header{
-        width: 312px;
+        width: 100%;
         height: 63px;
         justify-content: space-around;
         align-items: center;

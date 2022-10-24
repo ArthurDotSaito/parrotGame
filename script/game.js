@@ -11,12 +11,26 @@ let selectedCards = [];
 let firstCard = '';
 let secondCard = '';
 let NumberOfMoves = 0;
-
 const cardField = document.querySelector('.cardField');
 let cardQuantity = Number(prompt("Digite o número de cartas do jogo:"));
+let timer = document.querySelector('.timer');
+let currentTime;
+
+window.onload = () => {
+    loadGame();
+    setTimer();
+}
 
 while(cardQuantity%2 !== 0 || (cardQuantity < 4)||(cardQuantity > 14)){
     cardQuantity = Number(prompt("Digite o número de cartas do jogo:"));  
+}
+
+function setTimer(){
+    timer.innerHTML = '';
+    loop = setInterval(() => {
+        currentTime = Number(timer.innerHTML);
+        timer.innerHTML = currentTime + 1;
+    }, 1000);
 }
 
 function createCardElement(tag, className){
@@ -29,7 +43,7 @@ function shuffle(){
     return Math.random() - 0.5;
 }
 
-const shuffledCards = cards.sort(shuffle);
+shuffledCards = cards.sort(shuffle);
 
 function shuffleParrotDeck(cardQuantity){
     for(let i = 0; i < cardQuantity/2; i++){
@@ -42,7 +56,6 @@ function shuffleParrotDeck(cardQuantity){
 shuffleParrotDeck(cardQuantity);
 
 function createCard(parrotImage){
-
     const card = createCardElement('figure', 'classFigure');
     const faceFront = createCardElement('ul', 'face front');
     const faceBack = createCardElement('ul', 'face back')
@@ -62,7 +75,8 @@ function createCard(parrotImage){
 function endGame(){
     let flippedCards = document.querySelectorAll('.flipCard');
     if(flippedCards.length == cardQuantity){
-        alert(`Você ganhou com ${NumberOfMoves} jogadas!`);
+        alert(`Você ganhou com ${NumberOfMoves} jogadas! Seu tempo: ${currentTime}`);
+        clearInterval(loop);
     }
 }
 
@@ -108,5 +122,3 @@ function loadGame(){
         cardField.appendChild(card);
     });
 }
-
-loadGame();
