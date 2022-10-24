@@ -61,10 +61,8 @@ function createCard(parrotImage){
 
 function endGame(){
     let flippedCards = document.querySelectorAll('.flipCard');
-    console.log(flippedCards);
-    console.log(cardQuantity);
     if(flippedCards.length == cardQuantity){
-        alert("Você ganhou com X jogadas!");
+        alert(`Você ganhou com ${NumberOfMoves} jogadas!`);
     }
 }
 
@@ -72,22 +70,16 @@ function isEqual(){
     let firstParrot = firstCard.getAttribute('data-parrotGif');
     let secondParrot = secondCard.getAttribute('data-parrotGif');
 
-    console.log(firstParrot);
-    console.log(secondParrot);
-
     if(firstParrot == secondParrot){
         firstCard = '';
         secondCard = '';
-
         setTimeout(endGame, 1200);
     }else{
         setTimeout(() => {
             firstCard.classList.remove('flipCard');
             secondCard.classList.remove('flipCard');
-
             firstCard = '';
             secondCard = '';
-
         }, 1000);
     }
 }
@@ -99,9 +91,11 @@ function flipCard({target}){
     if(firstCard == ''){
         target.parentNode.classList.add('flipCard');
         firstCard = target.parentNode;
+        NumberOfMoves++;
     }else if(secondCard == ''){
         target.parentNode.classList.add('flipCard');
         secondCard = target.parentNode;
+        NumberOfMoves++;
     }
     isEqual();
 }
